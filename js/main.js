@@ -268,7 +268,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const FRAME_MS = 1000 / 30;
+    const FRAME_MS = 1000 / (window.innerWidth < 760 ? 24 : 30);
     let lastDraw = 0;
 
     const render = (t, steps) => {
@@ -522,6 +522,31 @@
   /* ---------- loader ---------- */
 
   const loader = document.getElementById("loader");
+  let introUntil = 0;
+  let refreshQueued = false;
+
+  // A ScrollTrigger refresh re-measures every pin (long task on phones): run it behind the loader,
+  // or after the intro once the main thread is idle — never while the intro is animating.
+  function safeRefresh() {
+    if (!window.ScrollTrigger) return;
+    if (body.classList.contains("is-loading")) {
+      ScrollTrigger.refresh();
+      return;
+    }
+    if (refreshQueued) return;
+    refreshQueued = true;
+    const idle = window.requestIdleCallback
+      ? (fn) => requestIdleCallback(fn, { timeout: 2000 })
+      : (fn) => setTimeout(fn, 200);
+    setTimeout(
+      () =>
+        idle(() => {
+          refreshQueued = false;
+          ScrollTrigger.refresh();
+        }),
+      Math.max(0, introUntil - performance.now())
+    );
+  }
 
   function finishLoader() {
     body.classList.remove("is-loading");
@@ -539,17 +564,21 @@
     loader.addEventListener("transitionend", (e) => e.target === loader && done());
     setTimeout(done, 1600);
     loader.classList.add("is-leaving");
+    introUntil = performance.now() + 3300;
     setTimeout(heroIntro, 550);
     setTimeout(phraseLoop, 1600);
   }
 
-  const pageLoaded = new Promise((r) => {
-    if (document.readyState === "complete") r();
-    else window.addEventListener("load", r, { once: true });
-  });
+  // Only the first screen gates the loader; lower sections load lazily later.
+  const heroReady = Promise.all(
+    [...document.querySelectorAll(".hero img")].map((img) => (img.decode ? img.decode().catch(() => {}) : null))
+  );
   const fontsReady = window.__fontsReady || Promise.resolve();
+  fontsReady.then(safeRefresh);
+  document.fonts?.ready.then(safeRefresh);
+  window.addEventListener("load", safeRefresh);
   const minShow = fontsReady.then(() => wait(reduceMotion ? 0 : 1700));
-  Promise.race([Promise.all([pageLoaded, minShow]), wait(5000)]).then(finishLoader);
+  Promise.race([Promise.all([heroReady, minShow]), wait(4500)]).then(finishLoader);
 
   /* ---------- about: words light up ---------- */
 
@@ -645,6 +674,10 @@
   audio.addEventListener("canplay", () => {
     audioOK = true;
   });
+  // Nothing audio-related is fetched during the intro; metadata (for seeking before play) comes later.
+  setTimeout(() => {
+    if (audio.preload === "none") audio.preload = "metadata";
+  }, 6000);
 
   function ensureAnalyser() {
     if (!location.protocol.startsWith("http")) return;
@@ -1274,7 +1307,4 @@
     );
   }
 
-  window.addEventListener("load", () => {
-    if (window.ScrollTrigger) ScrollTrigger.refresh();
-  });
 })();
