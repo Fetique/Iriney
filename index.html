@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070506" />
+    <title>irinei</title>
+    <meta name="description" content="irinei — музыка, кадры и мемы. Сайт-открытка, сделанный с любовью." />
+    <meta property="og:title" content="irinei" />
+    <meta property="og:description" content="не трогай моё королевство, рыцарь вампир, кровь в горло, карие глаза, immortal king" />
+    <meta property="og:image" content="images/photo_2026-09-29_23-46-34.jpg" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="images/sm/photo_2026-09-29_23-46-34.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css?v=7" />
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var timeout = new Promise(function (r) { setTimeout(r, 1200); });
+        var fonts = document.fonts && document.fonts.load
+          ? Promise.all([
+              document.fonts.load('italic 300 1em "Cormorant Garamond"'),
+              document.fonts.load('600 1em "Manrope"')
+            ])
+          : Promise.resolve();
+        window.__fontsReady = Promise.race([fonts, timeout])
+          .catch(function () {})
+          .then(function () { root.classList.add("fonts-ready"); });
+      })();
+    </script>
+  </head>
+  <body class="is-loading">
+    <div class="bg" aria-hidden="true">
+      <div class="bg__glow bg__glow--1"></div>
+      <div class="bg__glow bg__glow--2"></div>
+    </div>
+    <canvas class="dust" id="dust" aria-hidden="true"></canvas>
+    <div class="noise" aria-hidden="true"></div>
+
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"><span class="cursor__label"></span></div>
+    </div>
+
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader__name">
+        <span>i</span><span>r</span><span>i</span><span>n</span><span>e</span><span>i</span>
+      </div>
+      <div class="loader__drop"><span></span></div>
+    </div>
+
+    <header class="header">
+      <a class="header__brand" href="#top" aria-label="irinei — наверх">irinei</a>
+      <nav class="nav" aria-label="Навигация">
+        <a href="#about">она</a>
+        <a href="#music">музыка</a>
+        <a href="#frames">кадры</a>
+        <a href="#memes">мемы</a>
+      </nav>
+      <button class="mini-player" id="miniPlayer" type="button" aria-label="Играть или поставить на паузу">
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="mini-player__label" id="miniLabel">не трогай моё королевство</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero__floats" aria-hidden="true">
+          <figure class="float" data-depth="1" style="--l: 5%; --t: 20%; --w: 250px; --r: -6deg; --bob: 7s">
+            <div class="float__inner"><div class="float__card">
+              <img decoding="async" src="images/sm/photo_2026-09-29_23-45-39.jpg" alt="" />
+            </div></div>
+          </figure>
+          <figure class="float" data-depth="0.75" style="--l: 78%; --t: 15%; --w: 200px; --r: 7deg; --bob: 8.5s">
+            <div class="float__inner"><div class="float__card">
+              <img decoding="async" src="images/sm/photo_2026-09-29_23-46-48.jpg" alt="" />
+            </div></div>
+          </figure>
+          <figure class="float" data-depth="1.3" style="--l: 13%; --t: 64%; --w: 150px; --r: 10deg; --bob: 6.5s">
+            <div class="float__inner"><div class="float__card">
+              <img decoding="async" src="images/sm/photo_2026-09-29_23-44-15.jpg" alt="" />
+            </div></div>
+          </figure>
+          <figure class="float" data-depth="0.9" style="--l: 72%; --t: 62%; --w: 250px; --r: -5deg; --bob: 9s">
+            <div class="float__inner"><div class="float__card">
+              <img decoding="async" src="images/sm/photo_2026-09-29_23-45-15.jpg" alt="" />
+            </div></div>
+          </figure>
+          <figure class="float float--far" data-depth="0.4" style="--l: 27%; --t: 12%; --w: 150px; --r: -3deg; --bob: 10s">
+            <div class="float__inner"><div class="float__card">
+              <img decoding="async" src="images/sm/photo_2026-09-29_23-46-42.jpg" alt="" />
+            </div></div>
+          </figure>
+          <figure class="float float--far" data-depth="0.45" style="--l: 62%; --t: 9%; --w: 120px; --r: 4deg; --bob: 11s">
+            <div class="float__inner"><div class="float__card">
+              <img decoding="async" src="images/sm/photo_2026-09-29_23-46-45.jpg" alt="" />
+            </div></div>
+          </figure>
+        </div>
+
+        <div class="hero__center">
+          <p class="eyebrow hero__eyebrow">сайт-открытка <span class="eyebrow__sep">♡</span> сделан с любовью</p>
+          <h1 class="hero__title" aria-label="irinei">
+            <span class="char">i</span><span class="char">r</span><span class="char">i</span><span class="char">n</span><span class="char">e</span><span class="char">i</span>
+          </h1>
+          <p class="hero__phrase" aria-live="polite"><span id="phrase">без музыки нет жизни</span><i class="caret"></i></p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#music" data-magnetic>слушать</a>
+            <a class="btn btn--ghost" href="#frames" data-magnetic>смотреть кадры</a>
+          </div>
+        </div>
+
+        <div class="scroll-hint" aria-hidden="true"><span style="--i: 0">л</span><span style="--i: 1">и</span><span style="--i: 2">с</span><span style="--i: 3">т</span><span style="--i: 4">а</span><span style="--i: 5">й</span></div>
+      </section>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__row">
+          <div class="marquee__track">
+            <span>irinei</span><span>не трогай моё королевство</span><span>рыцарь вампир</span><span>кровь в горло</span><span>карие глаза</span><span>immortal king</span>
+            <span>irinei</span><span>не трогай моё королевство</span><span>рыцарь вампир</span><span>кровь в горло</span><span>карие глаза</span><span>immortal king</span>
+          </div>
+        </div>
+        <div class="marquee__row marquee__row--rev">
+          <div class="marquee__track">
+            <span>me and my followers</span><span>куроми</span><span>чёрные ногти</span><span>крылья на чехле</span><span>три часа ночи</span>
+            <span>me and my followers</span><span>куроми</span><span>чёрные ногти</span><span>крылья на чехле</span><span>три часа ночи</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="about" id="about">
+        <p class="eyebrow" data-reveal><span class="eyebrow__n">01</span> она</p>
+        <p class="about__text" id="aboutText">
+          она поёт
+          <span class="pill"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-12.jpg" alt="" /></span>
+          так, будто шепчет тебе на ухо в три часа ночи. длинные чёрные волосы, острые ногти
+          <span class="pill"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-15.jpg" alt="" /></span>,
+          полка с куроми
+          <span class="pill"><img decoding="async" src="images/sm/photo_2026-09-29_23-46-42.jpg" alt="" /></span>
+          и мемы с котиками
+          <span class="pill"><img decoding="async" src="images/sm/photo_2026-09-29_23-46-31.jpg" alt="" /></span>
+          — это всё irinei. и да, <em>без музыки нет жизни.</em>
+        </p>
+      </section>
+
+      <section class="music" id="music">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow"><span class="eyebrow__n">02</span> музыка</p>
+          <h2>послушай<br /><em>её голос</em></h2>
+        </header>
+
+        <div class="player" data-reveal>
+          <div class="player__art">
+            <div class="vinyl" id="vinyl">
+              <div class="vinyl__disc" id="vinylDisc">
+                <div class="vinyl__label">
+                  <img decoding="async" id="labelImg" src="music/covers/ne-trogaj-moe-korolevstvo.jpg" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="sleeve">
+              <img decoding="async" id="sleeveImg" src="music/covers/ne-trogaj-moe-korolevstvo.jpg" alt="Обложка трека «не трогай моё королевство»" />
+            </div>
+          </div>
+
+          <div class="player__body">
+            <p class="player__tag" id="playerTag">трек 01 / 05</p>
+            <h3 class="player__title" id="playerTitle">не трогай моё королевство</h3>
+            <canvas class="viz" id="viz" aria-hidden="true"></canvas>
+            <div class="player__controls">
+              <button class="play" id="playBtn" type="button" aria-label="Играть" data-magnetic>
+                <svg class="play__icon play__icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
+                <svg class="play__icon play__icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" /></svg>
+              </button>
+              <div class="timeline">
+                <span class="timeline__time" id="tCur">0:00</span>
+                <div class="progress" id="progress" role="slider" aria-label="Перемотка" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <i id="progressFill"></i>
+                </div>
+                <span class="timeline__time" id="tDur">2:05</span>
+              </div>
+            </div>
+            <p class="player__note" id="playerNote"></p>
+            <a class="btn btn--ghost player__link" id="playerLink" href="https://soundcloud.com/irineimeow/ne-trogaj-moe-korolevstvo" target="_blank" rel="noopener" data-magnetic>
+              слушать на soundcloud ↗
+            </a>
+          </div>
+          <audio id="audio" preload="metadata" src="music/ne-trogaj-moe-korolevstvo.mp3"></audio>
+        </div>
+
+        <div class="tracks-wrap" data-reveal>
+          <p class="tracks__head">все треки <span>— выбирай любой</span></p>
+          <ol class="tracks" id="tracks"></ol>
+        </div>
+      </section>
+
+      <section class="frames" id="frames">
+        <div class="frames__track" id="framesTrack">
+          <header class="frames__head">
+            <p class="eyebrow"><span class="eyebrow__n">03</span> кадры</p>
+            <h2>из тгк,<br /><em>с любовью</em></h2>
+            <p class="frames__hint">листай дальше — лента поедет вбок →</p>
+          </header>
+          <figure class="frame frame--p" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-05-02_13-57-30.jpg" alt="irinei в полумраке" /></div>
+            <figcaption><span>01</span> полумрак</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-39.jpg" alt="irinei на солнце" /></div>
+            <figcaption><span>02</span> солнце в волосах</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-08.jpg" alt="irinei в наушниках" /></div>
+            <figcaption><span>03</span> в наушниках</figcaption>
+          </figure>
+          <figure class="frame frame--p" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-46-48.jpg" alt="irinei" /></div>
+            <figcaption><span>04</span> тише</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-46-05.jpg" alt="irinei в розовом" /></div>
+            <figcaption><span>05</span> розовое утро</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-18.jpg" alt="irinei" /></div>
+            <figcaption><span>06</span> ленивый день</figcaption>
+          </figure>
+          <figure class="frame frame--p" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-46-45.jpg" alt="irinei улыбается" /></div>
+            <figcaption><span>07</span> почти улыбка</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-48.jpg" alt="irinei" /></div>
+            <figcaption><span>08</span> взгляд</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-03.jpg" alt="улыбка с брекетами" /></div>
+            <figcaption><span>09</span> улыбка с железом</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-43-29.jpg" alt="irinei в кресле" /></div>
+            <figcaption><span>10</span> кресло-трон</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-15.jpg" alt="irinei" /></div>
+            <figcaption><span>11</span> скучаю</figcaption>
+          </figure>
+          <figure class="frame frame--l" data-lb data-cursor="смотреть">
+            <div class="frame__img"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-31.jpg" alt="irinei прячется" /></div>
+            <figcaption><span>12</span> прячусь</figcaption>
+          </figure>
+          <div class="frames__end">
+            <p>ещё больше —<br /><em>в её тгк</em></p>
+          </div>
+        </div>
+        <div class="frames__progress" aria-hidden="true"><i id="framesBar"></i></div>
+      </section>
+
+      <section class="mirrors">
+        <header class="section-head section-head--center" data-reveal>
+          <p class="eyebrow"><span class="eyebrow__n">04</span> отражения</p>
+          <h2>крылья на чехле —<br /><em>обязательно</em></h2>
+        </header>
+        <div class="mirrors__cols">
+          <div class="mcol" data-speed="70">
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-43-55.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-23.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-34.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+          </div>
+          <div class="mcol mcol--mid" data-speed="-110">
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-25.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-12.jpg" alt="лицо в темноте" loading="lazy" /></figure>
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-26.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+          </div>
+          <div class="mcol mcol--last" data-speed="40">
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-44-45.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-29.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+            <figure data-lb data-cursor="смотреть"><img decoding="async" src="images/sm/photo_2026-09-29_23-45-36.jpg" alt="селфи в зеркале" loading="lazy" /></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="places">
+        <div class="wide-reveal" id="wideReveal">
+          <div class="wide-reveal__media">
+            <img decoding="async" src="images/photo_2026-09-29_23-46-02.jpg" alt="готический замок под серым небом" loading="lazy" />
+          </div>
+          <div class="wide-reveal__text">
+            <p class="eyebrow"><span class="eyebrow__n">05</span> места</p>
+            <h2>замки, закаты<br /><em>и тишина</em></h2>
+          </div>
+        </div>
+
+        <div class="places__grid">
+          <figure class="place place--a" data-lb data-cursor="смотреть" data-reveal>
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-45-49.jpg" alt="башня замка" loading="lazy" />
+          </figure>
+          <figure class="place place--b" data-lb data-cursor="смотреть" data-reveal>
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-45-55.jpg" alt="витраж и горгульи" loading="lazy" />
+          </figure>
+          <p class="place-quote" data-reveal>горгульи, витражи<br />и серое небо — <em>как дома</em></p>
+          <figure class="place place--c" data-lb data-cursor="смотреть" data-reveal>
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-45-58.jpg" alt="стены замка" loading="lazy" />
+          </figure>
+          <figure class="place place--d" data-lb data-cursor="смотреть" data-reveal>
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-45-05.jpg" alt="irinei на пляже на закате" loading="lazy" />
+          </figure>
+          <p class="place-quote place-quote--right" data-reveal>а потом — песок,<br />вода и <em>закат</em></p>
+        </div>
+      </section>
+
+      <section class="memes" id="memes">
+        <header class="section-head" data-reveal>
+          <p class="eyebrow"><span class="eyebrow__n">06</span> мемы из тгк</p>
+          <h2>мяу-мяу-мяу,<br /><em>хорошо?</em></h2>
+          <p class="memes__hint"><span class="hint-mouse">их можно таскать ✦ клик — открыть</span><span class="hint-touch">зажми и тащи ✦ тап — открыть</span></p>
+        </header>
+        <div class="board" id="board">
+          <figure class="sticker" data-r="-7" data-cursor="тащи" style="--l: 3%; --t: 6%; --w: 300px">
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-44-39.jpg" alt="мем: me and my followers" draggable="false" />
+          </figure>
+          <figure class="sticker" data-r="5" data-cursor="тащи" style="--l: 30%; --t: 2%; --w: 280px">
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-44-35.jpg" alt="мем: мяу-мяу, хорошо?" draggable="false" />
+          </figure>
+          <figure class="sticker" data-r="-3" data-cursor="тащи" style="--l: 56%; --t: 8%; --w: 320px">
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-46-28.jpg" alt="мем: подписчики признайтесь, вы выглядите так?" draggable="false" />
+          </figure>
+          <figure class="sticker" data-r="9" data-cursor="тащи" style="--l: 80%; --t: 4%; --w: 210px">
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-46-31.jpg" alt="мем: тьмок" draggable="false" />
+          </figure>
+          <figure class="sticker" data-r="4" data-cursor="тащи" style="--l: 8%; --t: 50%; --w: 290px">
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-46-25.jpg" alt="мем: без музыки нет жизни" draggable="false" />
+          </figure>
+          <figure class="sticker" data-r="-6" data-cursor="тащи" style="--l: 38%; --t: 48%; --w: 330px">
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-46-22.jpg" alt="мем с котёнком" draggable="false" />
+          </figure>
+          <figure class="sticker" data-r="6" data-cursor="тащи" style="--l: 70%; --t: 52%; --w: 300px">
+            <img decoding="async" src="images/sm/photo_2026-09-29_23-46-42.jpg" alt="коллекция куроми" draggable="false" />
+          </figure>
+        </div>
+      </section>
+
+      <section class="finale" id="finale">
+        <div class="finale__bg"><img decoding="async" src="images/lg/photo_2026-09-29_23-45-08.jpg" alt="" /></div>
+        <div class="finale__content">
+          <p class="eyebrow" data-reveal><span class="eyebrow__n">07</span> от ценителя её музыки</p>
+          <h2 class="finale__title"><span class="line"><span>спасибо</span></span><span class="line"><span><em>за музыку</em></span></span></h2>
+          <p class="finale__text" data-reveal>
+            этот сайт сделан просто так — бесплатно и с любовью, чтобы тебе было приятно.
+            пусть её треки звучат из каждого наушника ♡
+          </p>
+          <div class="finale__actions" data-reveal>
+            <a class="btn btn--primary" href="https://soundcloud.com/irineimeow" target="_blank" rel="noopener" data-magnetic>все треки на soundcloud</a>
+            <a class="btn btn--ghost" id="tgLink" href="#" target="_blank" rel="noopener" data-magnetic hidden>телеграм-канал</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer__brand">irinei</span>
+      <span>сделано ценителем её музыки · 2026</span>
+      <a href="#top">наверх ↑</a>
+    </footer>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Просмотр фото">
+      <button class="lightbox__btn lightbox__close" type="button" aria-label="Закрыть">✕</button>
+      <button class="lightbox__btn lightbox__prev" type="button" aria-label="Предыдущее фото">←</button>
+      <figure class="lightbox__figure"><img id="lbImg" alt="" /></figure>
+      <button class="lightbox__btn lightbox__next" type="button" aria-label="Следующее фото">→</button>
+      <p class="lightbox__count" id="lbCount"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="js/main.js?v=8"></script>
+  </body>
+</html>
